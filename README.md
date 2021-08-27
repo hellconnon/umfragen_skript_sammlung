@@ -3,9 +3,9 @@ Hier finden sich die Skripts, welche zur autmatischen Verarbeitung der Umfrageda
 Es können auch weitere Funktionen hinzukommen und auch weitere Abläufe automatisiert werden.
 
 
-# Skript benutzen
+## Skript benutzen
 
-## umfragen_skript.py
+### umfragen_skript.py
 
 Das Skript ist dafür da um die Input Dateien zu lesen und nach den Vorgaben zu exportieren und in einen Output Ordner zu exportieren.
 Es kann über die Kommandozeile mit einem relativem Pfad zur input-Datei gestartet werden.
@@ -20,13 +20,13 @@ oder
 außerdem kann der Dateityp der Exportdateien angepasst werden.
 
 
-## use_input.py
+### use_input.py
 
 Mit diesem Skript kann man einfach eine oder mehrere Input-Dateien in den Ordner 'Input' legen und dann per Doppelklick oder Kommandozeile das Skript ausfürhren.
 Das Funktioniert aber nur, wenn es sich bei den Dateien um __.csv__ Dateien handelt.
 
 
-# Erwartete Ordnerstruktur
+## Erwartete Ordnerstruktur
 
 Die Skripte erwarten eine gewisse Ordnerstruktur, die wie folgt aussieht:
 
@@ -40,7 +40,7 @@ Die Skripte erwarten eine gewisse Ordnerstruktur, die wie folgt aussieht:
         ├── Beliebige_csv_Datei_2.csv
 
 
-# Abhängigkeiten installieren
+## Abhängigkeiten installieren
 
 Um das Skript ausführen zu können werden unterschiedliche Module benötigt.
 Diese können einfach mithilfe von pip installiert werden.
