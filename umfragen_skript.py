@@ -7,21 +7,28 @@ from pathlib import Path
 # Enthält die Logik des ladens der Umfrage und dem export nach verschiedenen werten
 def main(file = None, output_prefix = None):
     make_output_dir()
-    if file:
-        print(file.name)
-    if not file:
+    # Wird nur ausgeführt wenn Skript über die Kommandozeile ausgeführt wird
+    if __name__ == '__main__':
         file = get_input_file()
-
-    if file.name.endswith('.csv'):
-        dataframe = read_csv(file)
-    elif file.name.endswith('.xlsx'):
-        dataframe = read_xls(file)
-    else:
-        raise Exception('Die Angegebene Datei hat nicht das passende Format!' + " " + file.extension)
-
+    dataframe = read_dataframe(file)
     split_and_save_studiengang(dataframe)
     split_and_save_tutorium(dataframe)
 
+
+# Liest die angegebene Datei in einen dataframe und gibt diesen zurück
+def read_dataframe(file):
+    if file.name.endswith('.csv'):
+        output_dataframe = pd.read_csv(file, encoding="latin", sep=';')
+    elif file.name.endswith('.xlsx'):
+        output_dataframe = pd.read_excel(file)
+    else:
+        raise Exception('Die Angegebene Datei hat nicht das passende Format!' + " " + file.extension)
+
+    # Löscht die erste Zeile der Daten, da dort nur murks drinsteht
+    output_dataframe.drop(index=0, axis='index', inplace=True)
+    return output_dataframe
+
+# Lädt die über das Terminal angegebene Datei und gibt diese zurück. Wird nur bei Aufruf über das Terminal benötigt.
 def get_input_file():
     terminal_arguments = sys.argv
     if len(terminal_arguments) > 1:
@@ -32,39 +39,34 @@ def get_input_file():
     raise Exception('Es wurde kein (korrekter) Pfad zu einer Datei angegeben!!')
 
 
+# Erstellt den Output Ordner, in welchem die Daten gespeichert werden
 def make_output_dir():
-    # ---- erstelle output directory ----
     Path('output/csv').mkdir(parents=True, exist_ok=True)
     Path('output/excel').mkdir(parents=True, exist_ok=True)
 
-def read_csv(path = 'input_csv.csv'):
-    output_dataframe = pd.read_csv(path, encoding="latin", sep=';')
-    output_dataframe.drop(index=0, axis='index', inplace=True)
-    return output_dataframe
-
-
-def read_xls(path = 'input_xls.xlsx'):
-    output_dataframe = pd.read_excel(path)
-    output_dataframe.drop(index=0, axis='index', inplace=True)
-    return output_dataframe
 
 # Unterteilt die Eingabedatei nach Studiengang und schreibt die Daten für jeden Studiengang in den output Ordner
+# Hier kann auch der output_mode manipuliert werden um die Daten als excel Datei zu speichern, einfach immer csv mit xls oder xlsx ersetzten
 def split_and_save_studiengang(dataframe : pd.DataFrame, output_mode = 'csv'):
+    # ---- Sucht sich alle gegebenen Antworten raus, auch die in Freitext ----
     studiengang_auswahl = dataframe.loc[:, 'Studiengang'].unique()
 
+    # ---- Speichert für jeden gegebenen Studiengang eine Datei in Output ----
     for studiengang in studiengang_auswahl:
         current = dataframe.loc[dataframe['Studiengang'] == studiengang]
-        output_path = studiengang
-        write_dataframe(dataframe=current, path=output_path, output_mode=output_mode)
+        # ---- kann geändert werden um eine andere Namenskonvention zu nutzen ----
+        output_prefix = studiengang
+        write_dataframe(dataframe=current, path=output_prefix, output_mode=output_mode)
 
 # Unterteilt die Eingabedatei nach Tutoriumsnummer und schreibt die Daten für jedes Tutorium in den Output Ordner 
+# Hier kann auch der output_mode manipuliert werden um die Daten als excel Datei zu speichern, einfach immer csv mit xls oder xlsx ersetzten
 def split_and_save_tutorium(dataframe: pd.DataFrame, output_mode = 'csv'):
     tutorien = dataframe.loc[:, 'Tutoriumsnummer'].unique()
     
     for tut in tutorien:
         current = dataframe.loc[dataframe['Tutoriumsnummer'] == tut]
-        output_path = 'Tutorium Nummer ' + str(tut)
-        write_dataframe(dataframe=current, path=output_path, output_mode=output_mode)
+        output_prefix = 'Tutorium Nummer ' + str(tut)
+        write_dataframe(dataframe=current, path=output_prefix, output_mode=output_mode)
 
 
 # Schreibt den gegebenen Abschnitt als Datei
