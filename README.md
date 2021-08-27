@@ -30,11 +30,11 @@ Das Funktioniert aber nur, wenn es sich bei den Dateien um __.csv__ Dateien hand
 
 Die Skripte erwarten eine gewisse Ordnerstruktur, die wie folgt aussieht:
 
-.
-├── use_input.py                         # Skript um Input einfacher zu gestalten
-├── umfragen_skript.py                   # Skript um Umfragen zu bearbeiten
-├── README.txt                           # Diese Datei
-├── requirements.txt                     # Enthält Abhängigkeiten, die mithilfe von pip installiert werden müssen
-├── input                                # Ordner um Batch-processing zu verwenden
-    ├── Beliebige_csv_Datei.csv
-    ├── Beliebige_csv_Datei_2.csv
+    .
+    ├── use_input.py                         # Skript um Input einfacher zu gestalten
+    ├── umfragen_skript.py                   # Skript um Umfragen zu bearbeiten
+    ├── README.txt                           # Diese Datei
+    ├── requirements.txt                     # Enthält Abhängigkeiten, die mithilfe von pip installiert werden müssen
+    ├── input                                # Ordner um Batch-processing zu verwenden
+        ├── Beliebige_csv_Datei.csv
+        ├── Beliebige_csv_Datei_2.csv
