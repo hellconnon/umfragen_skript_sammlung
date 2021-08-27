@@ -6,12 +6,16 @@ from pathlib import Path
 
 # Enthält die Logik des ladens der Umfrage und dem export nach verschiedenen werten
 def main(file = None, output_prefix = None):
+    # Erstelle Ausgabeordner
     make_output_dir()
     # Wird nur ausgeführt wenn Skript über die Kommandozeile ausgeführt wird
     if __name__ == '__main__':
         file = get_input_file()
+    # Wandle Datei in Pandas Dataframe um
     dataframe = read_dataframe(file)
+    # Teile Daten nach Studiengang und speichere diese im Ausgabeordner
     split_and_save_studiengang(dataframe)
+    # Teile Daten nach Tutorium und speichere diese im Ausgabeordner
     split_and_save_tutorium(dataframe)
 
 
