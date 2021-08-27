@@ -38,3 +38,11 @@ Die Skripte erwarten eine gewisse Ordnerstruktur, die wie folgt aussieht:
     ├── input                                # Ordner um Batch-processing zu verwenden
         ├── Beliebige_csv_Datei.csv
         ├── Beliebige_csv_Datei_2.csv
+
+
+# Abhängigkeiten installieren
+
+Um das Skript ausführen zu können werden unterschiedliche Module benötigt.
+Diese können einfach mithilfe von pip installiert werden.
+
+``` pip install -r requirements.txt ```
